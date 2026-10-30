@@ -25,10 +25,6 @@ export function WelcomePage() {
         <h1 className="welcome-title">
           Sua retirada de remédio na UBS começa em casa.
         </h1>
-        <p className="welcome-subtitle">
-          Confira a receita, prepare a retirada na unidade certa e organize os lembretes
-          antes de sair de casa — menos fila, menos viagem perdida.
-        </p>
 
         <div className="welcome-actions">
           <Link to="/inicio" className="btn hero-primary welcome-cta">
@@ -38,11 +34,6 @@ export function WelcomePage() {
             Criar conta
           </Link>
         </div>
-
-        <p className="welcome-note">
-          Inspirado em modelos internacionais como o <strong>MyGP</strong> (Reino Unido),
-          feito para as UBS do Distrito Federal.
-        </p>
       </div>
     </main>
   );
