@@ -6,7 +6,6 @@ import { useStore } from '../../state/AppStore';
 import { prescriptionsOfActive, reminderBuckets } from '../../state/selectors';
 import { currentVersionOf } from '../../domain/rules/planRules';
 import { formatDateTime, datePart, weekday, weekdayName } from '../../domain/time';
-import { ContextSwitch } from '../profile/ContextSwitch';
 import { computeJourney } from './journey';
 import { useAuth } from '../../state/AuthProvider';
 import { accountDisplayName } from '../../lib/accountName';
