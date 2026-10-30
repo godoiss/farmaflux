@@ -1,0 +1,25 @@
+# Dependencies and generated files
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Local deployment settings and environment variables
+.vercel/
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Logs and test artifacts
+*.log
+shots/
+test-results/
+playwright-report/
+__pycache__/
+*.py[cod]
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
