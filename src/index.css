@@ -536,12 +536,12 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Tela de abertura (Demo Day): fundo shader + globo da marca. */
+/* Tela de abertura (Demo Day): fundo shader da marca. */
 @layer components {
   .welcome {
     position: relative;
     display: grid;
-    place-items: start center;
+    place-items: center;
     min-height: 100dvh;
     overflow: hidden;
     padding: clamp(2.5rem, 9vh, 5.5rem) 1.5rem calc(2rem + env(safe-area-inset-bottom));
@@ -551,34 +551,14 @@
     isolation: isolate;
   }
   .welcome-shader { position: absolute; inset: 0; z-index: 0; }
-  .welcome-globe {
-    position: absolute;
-    left: 50%;
-    bottom: -8%;
-    width: min(92vw, 480px);
-    aspect-ratio: 1;
-    transform: translateX(-50%);
-    z-index: 2;
-    opacity: 0.98;
-    filter: drop-shadow(0 0 70px rgb(141 224 200 / 0.3));
-  }
-  /* Disco escuro atrás do globo para a esfera e os pontos ganharem contraste. */
-  .welcome-globe::before {
-    content: '';
-    position: absolute;
-    inset: 9%;
-    border-radius: 50%;
-    background: radial-gradient(circle at 50% 42%, rgb(7 30 24 / 0.78) 0%, rgb(7 28 23 / 0.5) 56%, transparent 72%);
-    z-index: -1;
-  }
   .welcome-overlay {
     position: absolute;
     inset: 0;
     z-index: 1;
     pointer-events: none;
     background:
-      radial-gradient(135% 70% at 50% 8%, rgb(8 33 27 / 0.78) 0%, rgb(8 33 27 / 0.28) 46%, transparent 72%),
-      linear-gradient(to bottom, rgb(8 33 27 / 0.6) 0%, transparent 30%);
+      radial-gradient(120% 75% at 50% 50%, rgb(8 33 27 / 0.6) 0%, rgb(8 33 27 / 0.22) 48%, transparent 74%),
+      linear-gradient(to bottom, rgb(8 33 27 / 0.45) 0%, transparent 26%, transparent 74%, rgb(8 33 27 / 0.45) 100%);
   }
   .welcome-content {
     position: relative;
@@ -665,7 +645,6 @@
   .welcome-note strong { color: #e8f3e5; font-weight: 600; }
 
   @media (max-width: 640px) {
-    .welcome-globe { bottom: -24%; width: min(165vw, 520px); opacity: 0.85; }
     .welcome-brand { margin-bottom: 0.75rem; }
     .welcome-note { margin-top: 1.75rem; }
   }

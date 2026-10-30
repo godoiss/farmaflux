@@ -1,17 +1,13 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, FlaskConical } from 'lucide-react';
 import { ShaderBackground } from '../../components/ui/mesh-drift-shader';
-import { Globe } from '../../components/ui/globe';
 import { LogoMark } from '../../components/brand/Logo';
 
-/** Tela de abertura (Demo Day): fundo animado da marca + globo, acima do app. */
+/** Tela de abertura (Demo Day): fundo animado da marca, acima do app. */
 export function WelcomePage() {
   return (
     <main className="welcome">
       <ShaderBackground className="welcome-shader" />
-      <div className="welcome-globe" aria-hidden>
-        <Globe />
-      </div>
       <div className="welcome-overlay" aria-hidden />
 
       <div className="welcome-content">
