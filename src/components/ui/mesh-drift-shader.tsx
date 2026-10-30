@@ -326,17 +326,17 @@ const WELCOME_UNIFORMS = {
 
 export type ShaderUniforms = typeof WELCOME_UNIFORMS
 
-// Preset "Mesh drift" (21st.dev) para a home: azul/verde/cinza sobre grafite.
+// Preset "Mesh drift" (21st.dev) para a home: tema verde escuro da marca.
 export const HOME_UNIFORMS: ShaderUniforms = {
   colors: [
-    [0.071, 0.114, 0.129], // #121D21
-    [0.0, 0.749, 1.0], // #00BFFF
-    [0.267, 0.859, 0.2], // #44DB33
-    [0.278, 0.341, 0.361], // #47575C
-    [0.278, 0.341, 0.361],
-    [0.278, 0.341, 0.361],
-    [0.278, 0.341, 0.361],
-    [0.278, 0.341, 0.361],
+    [0.035, 0.125, 0.105], // #091f1b verde-floresta profundo
+    [0.082, 0.247, 0.212], // #153f36 teal-deep
+    [0.145, 0.447, 0.396], // #257265 teal
+    [0.247, 0.561, 0.49], // #3f8f7d teal claro (brilho)
+    [0.247, 0.561, 0.49],
+    [0.247, 0.561, 0.49],
+    [0.247, 0.561, 0.49],
+    [0.247, 0.561, 0.49],
   ] as [number, number, number][],
   colorCount: 4,
   scale: 1.3,

@@ -159,7 +159,7 @@ export function AppShell() {
 
           <StatusBanners />
 
-          <main id="conteudo" className="app-main mx-auto w-full max-w-[1320px] flex-1 px-4 pt-6 pb-[calc(7rem+env(safe-area-inset-bottom))] sm:px-7 lg:px-10 lg:pt-9 lg:pb-12 xl:px-12">
+          <main id="conteudo" className={`app-main mx-auto w-full max-w-[1320px] flex-1 px-4 pt-6 pb-[calc(7rem+env(safe-area-inset-bottom))] sm:px-7 lg:px-10 lg:pt-9 lg:pb-12 xl:px-12${pathname === '/inicio' ? ' app-main-home' : ''}`}>
             <div key={pathname} className="route-content"><Outlet /></div>
           </main>
         </div>

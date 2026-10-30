@@ -405,19 +405,36 @@
     border-radius: 1.25rem;
     pointer-events: none;
   }
-  .home-ambient-shader { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.92; }
-  /* Véu leve: deixa o shader bem presente no fundo todo, mas mantém contraste
-     dos textos que ficam direto sobre o fundo (saudação, rótulos, rodapé). */
+  .home-ambient-shader { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.95; }
+  /* Tema escuro: véu verde-escuro aprofunda o fundo e garante contraste do
+     texto claro que fica direto sobre ele (saudação, rótulos, rodapé). */
   .home-ambient-scrim {
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(130% 42% at 22% 7%, rgb(245 246 242 / 0.62) 0%, rgb(245 246 242 / 0.28) 60%, transparent 100%),
-      linear-gradient(to bottom, rgb(245 246 242 / 0.34) 0%, rgb(245 246 242 / 0.26) 55%, rgb(245 246 242 / 0.34) 100%);
+      radial-gradient(130% 44% at 22% 6%, rgb(6 26 21 / 0.62) 0%, rgb(6 26 21 / 0.26) 60%, transparent 100%),
+      linear-gradient(to bottom, rgb(6 26 21 / 0.42) 0%, rgb(6 26 21 / 0.26) 52%, rgb(6 26 21 / 0.5) 100%);
   }
   @media (max-width: 767px) {
     .home-ambient { inset: -1rem -1rem -1rem; }
   }
+
+  /* Home no tema verde escuro: área de conteúdo escura, textos sobre o fundo em
+     claro. Os cards permanecem opacos (texto escuro) e flutuam sobre o fundo. */
+  .app-main-home { background: #081f1a; }
+  .home-page .home-heading .eyebrow { color: #8fe0c8; }
+  .home-page .home-heading h1 { color: #ffffff; }
+  .home-page .home-heading h1 .text-teal { color: var(--color-accent); }
+  .home-page .home-heading h1 + p { color: #cadbd1; }
+  .home-page .home-date { color: #bcd2c6; }
+  .home-page .home-date span { color: #eaf3ec; }
+  .home-page .care-context { border-block-color: rgb(255 255 255 / 0.14); }
+  .home-page .care-context p span { color: #a9c3b7; }
+  .home-page .care-context p strong { color: #ffffff; }
+  .home-page .home-note { border-top-color: rgb(255 255 255 / 0.14); color: #aec6b8; }
+  .home-page .home-note a { color: var(--color-accent); }
+  /* Separa o hero (já verde escuro) do fundo escuro com um leve anel claro. */
+  .home-page .care-hero { box-shadow: 0 0 0 1px rgb(255 255 255 / 0.08), var(--shadow-lift); }
   .home-heading { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; margin-bottom: 0.25rem; }
   .home-heading h1 { margin-top: 0.375rem; font-size: clamp(2.1rem, 3vw, 2.75rem); line-height: 1.2; letter-spacing: -0.055em; font-weight: 600; outline: none; }
   .home-heading h1 + p { margin-top: 0.5rem; color: var(--color-ink-soft); font-size: 0.9375rem; }
