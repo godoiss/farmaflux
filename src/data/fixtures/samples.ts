@@ -8,8 +8,15 @@ import { MEDICATIONS } from './catalog';
  */
 export interface SampleDocument {
   id: string;
+  /** Rótulo estático (usado internamente). Para exibição use `sampleLabel`. */
   label: string;
+  /** Descrição estática. Para exibição use `sampleDescription`. */
   description: string;
+  /**
+   * Quando true, o label e a descrição referenciam o nome da pessoa assistida
+   * e devem ser interpolados via `sampleLabel` / `sampleDescription`.
+   */
+  usesAssistedName?: boolean;
   fileName: string;
   assetPath: string;
   mimeType: string;
@@ -17,6 +24,16 @@ export interface SampleDocument {
   extracted: PrescriptionFields;
   documentFindings: DocumentFindingCode[];
   demoValidUntil: LocalDate | null;
+}
+
+/** Retorna o rótulo do sample, substituindo o placeholder pelo nome real da pessoa. */
+export function sampleLabel(s: SampleDocument, assistedName: string): string {
+  return s.label.replace('{{name}}', assistedName);
+}
+
+/** Retorna a descrição do sample, substituindo o placeholder pelo nome real da pessoa. */
+export function sampleDescription(s: SampleDocument, assistedName: string): string {
+  return s.description.replace('{{name}}', assistedName);
 }
 
 export const PRESCRIBER = 'Dra. Helena Prado · CRM-DF 000000 (fictício)';
@@ -28,8 +45,9 @@ const read = <T,>(value: T) => ({ value, reading: 'read' as const });
 export const SAMPLES: SampleDocument[] = [
   {
     id: 'maria-sem-data',
-    label: 'Receita da Dona Maria (sem data legível)',
+    label: 'Receita de {{name}} (sem data legível)',
     description: 'Leitura demonstrativa com data de emissão não identificada.',
+    usesAssistedName: true,
     fileName: 'receita-dona-maria.svg',
     assetPath: '/samples/receita-maria-sem-data.svg',
     mimeType: 'image/svg+xml',
@@ -46,8 +64,9 @@ export const SAMPLES: SampleDocument[] = [
   },
   {
     id: 'maria-corrigida',
-    label: 'Receita corrigida da Dona Maria',
+    label: 'Receita corrigida de {{name}}',
     description: 'Mesmo conteúdo, agora com data de emissão legível.',
+    usesAssistedName: true,
     fileName: 'receita-dona-maria-corrigida.svg',
     assetPath: '/samples/receita-maria-corrigida.svg',
     mimeType: 'image/svg+xml',
@@ -100,8 +119,9 @@ export const SAMPLES: SampleDocument[] = [
   },
   {
     id: 'maria-tres-itens',
-    label: 'Receita com três itens',
+    label: 'Receita de {{name}} com três itens',
     description: 'Útil para ver disponibilidade parcial e itens sem informação.',
+    usesAssistedName: true,
     fileName: 'receita-tres-itens.svg',
     assetPath: '/samples/receita-maria-tres-itens.svg',
     mimeType: 'image/svg+xml',

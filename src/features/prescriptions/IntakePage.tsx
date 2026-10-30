@@ -8,7 +8,7 @@ import { useStore } from '../../state/AppStore';
 import { useAnnounce } from '../../state/Announcer';
 import { registerPreview } from '../../state/previewRegistry';
 import { activePerson, findPrescription, preCheckOf } from '../../state/selectors';
-import { SAMPLES, type SampleDocument } from '../../data/fixtures/samples';
+import { SAMPLES, sampleLabel, sampleDescription, type SampleDocument } from '../../data/fixtures/samples';
 import { previewKindFor, versionFromSample, versionFromUpload } from '../../data/factories';
 import { ACCEPT_ATTR, resolveMime, validateFileMeta } from '../../domain/rules/fileRules';
 import { STATUS_COPY } from '../../domain/rules/preCheck';
@@ -250,10 +250,10 @@ export function IntakePage({ mode }: { mode: 'new' | 'correction' }) {
                       <img src={s.assetPath} alt="" className="h-14 w-11 shrink-0 rounded-md border border-line bg-white object-cover" />
                       <span className="min-w-0 flex-1">
                         <span className="flex flex-wrap items-center gap-2 font-semibold">
-                          {s.label}
+                          {sampleLabel(s, person.name)}
                           {recommended && <span className="pill tone-info py-0.5 text-xs">Recomendado</span>}
                         </span>
-                        <span className="block text-sm text-ink-soft">{s.description}</span>
+                        <span className="block text-sm text-ink-soft">{sampleDescription(s, person.name)}</span>
                       </span>
                       {selected && <Check size={20} className="shrink-0 text-teal" aria-hidden />}
                     </button>
