@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
-import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
-import { ArrowUpRight, Bell, Building2, ChevronRight, CircleHelp, FileText, House, Landmark, ListChecks, MessagesSquare, UserRound, type LucideIcon } from 'lucide-react';
+import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { ArrowUpRight, Bell, Building2, ChevronRight, CircleHelp, FileText, House, Landmark, ListChecks, LogOut, MessagesSquare, UserRound, type LucideIcon } from 'lucide-react';
+import { useAuth } from '../../state/AuthProvider';
 import { Logo } from '../brand/Logo';
 import { DemoBadge } from './DemoBadge';
 import { StatusBanners } from './StatusBanners';
@@ -60,6 +61,12 @@ function BellButton({ onClick }: { onClick: () => void }) {
 export function AppShell() {
   const { data } = useStore();
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const { signOut } = useAuth();
+  const handleLogout = async () => {
+    await signOut();
+    navigate('/entrar', { replace: true });
+  };
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [presentationOpen, setPresentationOpen] = useState(false);
   const firstRender = useRef(true);
@@ -118,6 +125,9 @@ export function AppShell() {
               <span className="min-w-0 flex-1"><strong className="block truncate text-sm font-semibold">{data.profile.displayName}</strong><span className="block text-xs text-ink-soft">{USAGE_MODE_LABEL[data.profile.mode]}</span></span>
               <ChevronRight size={16} className="text-ink-faint" aria-hidden />
             </Link>
+            <button type="button" onClick={handleLogout} className="btn btn-secondary w-full">
+              <LogOut size={18} aria-hidden /> Sair da conta
+            </button>
           </div>
         </aside>
 
@@ -136,6 +146,9 @@ export function AppShell() {
                 <NavLink to="/perfil" className="btn-icon" aria-label="Perfil e acessibilidade">
                   <UserRound size={22} aria-hidden />
                 </NavLink>
+                <button type="button" onClick={handleLogout} className="btn-icon" aria-label="Sair da conta">
+                  <LogOut size={22} aria-hidden />
+                </button>
               </div>
             </div>
             <div className="flex items-center justify-between gap-2 px-4 pt-1 pb-2 text-xs">

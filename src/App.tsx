@@ -1,6 +1,9 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { type ReactElement } from 'react';
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 import { IntroGate } from './features/intro/IntroGate';
 import { CadastroPage } from './features/auth/CadastroPage';
+import { LoginPage } from './features/auth/LoginPage';
+import { useAuth } from './state/AuthProvider';
 import { AppShell } from './components/layout/AppShell';
 import { NotFound } from './components/layout/NotFound';
 import { WelcomePage } from './features/welcome/WelcomePage';
@@ -19,11 +22,24 @@ import { SourcesPage } from './features/network/SourcesPage';
 import { ProfilePage } from './features/profile/ProfilePage';
 import { HelpPage } from './features/help/HelpPage';
 
+/** Bloqueia rotas internas: sem sessão válida, vai para o login. */
+function RequireAuth({ children }: { children: ReactElement }) {
+  const { session, loading } = useAuth();
+  if (loading) return <div className="auth-page" aria-busy="true">Carregando…</div>;
+  if (!session) return <Navigate to="/entrar" replace />;
+  return children;
+}
+
 const router = createBrowserRouter([
   { path: '/', element: <WelcomePage /> },
+  { path: '/entrar', element: <LoginPage /> },
   { path: '/cadastro', element: <CadastroPage /> },
   {
-    element: <AppShell />,
+    element: (
+      <RequireAuth>
+        <AppShell />
+      </RequireAuth>
+    ),
     children: [
       { path: '/inicio', element: <HomePage /> },
       { path: '/receitas', element: <PrescriptionsPage /> },
