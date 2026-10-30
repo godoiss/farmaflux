@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { IntroGate } from './features/intro/IntroGate';
+import { CadastroPage } from './features/auth/CadastroPage';
 import { AppShell } from './components/layout/AppShell';
 import { NotFound } from './components/layout/NotFound';
 import { WelcomePage } from './features/welcome/WelcomePage';
@@ -20,6 +21,7 @@ import { HelpPage } from './features/help/HelpPage';
 
 const router = createBrowserRouter([
   { path: '/', element: <WelcomePage /> },
+  { path: '/cadastro', element: <CadastroPage /> },
   {
     element: <AppShell />,
     children: [

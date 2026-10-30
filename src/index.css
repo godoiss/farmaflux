@@ -774,6 +774,33 @@
 /* Toast escuro (navy) com texto claro sobre o tema claro. */
 .toast { background: var(--color-ink); color: #ffffff; }
 
+/* Tela de cadastro / autenticação. */
+.auth-page { min-height: 100dvh; display: grid; place-items: center; padding: clamp(1.25rem, 4vw, 2.5rem) 1rem calc(1.5rem + env(safe-area-inset-bottom)); background: var(--color-canvas); }
+.auth-card { width: 100%; max-width: 30rem; background: var(--color-surface); border: 1px solid var(--color-line); border-radius: 1.25rem; box-shadow: var(--shadow-lift); padding: clamp(1.25rem, 4vw, 2rem); }
+.auth-back { display: inline-flex; align-items: center; gap: 0.35rem; min-height: 2.75rem; color: var(--color-teal); font-weight: 600; font-size: 0.9rem; }
+.auth-back:hover { text-decoration: underline; text-underline-offset: 3px; }
+.auth-brand { display: inline-flex; margin-top: 0.25rem; }
+.auth-title { margin-top: 0.75rem; font-size: clamp(1.5rem, 5vw, 1.9rem); font-weight: 700; color: var(--color-ink); }
+.auth-lead { margin-top: 0.4rem; color: var(--color-ink-soft); font-size: 1rem; line-height: 1.5; }
+.auth-form { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1.1rem; }
+.role-fieldset { border: 0; padding: 0; margin: 0; }
+.role-grid { margin-top: 0.6rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+.role-option { display: flex; flex-direction: column; align-items: flex-start; gap: 0.3rem; padding: 1rem; border: 2px solid var(--color-line); border-radius: 1rem; background: var(--color-surface); color: var(--color-ink); cursor: pointer; transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease; }
+.role-option:hover { border-color: var(--color-line-strong); }
+.role-option.is-on { border-color: var(--color-teal); background: var(--color-mint); box-shadow: 0 0 0 3px rgb(45 108 212 / 0.12); }
+.role-option svg { color: var(--color-teal); }
+.role-title { font-weight: 700; font-size: 1.0625rem; }
+.role-sub { color: var(--color-ink-soft); font-size: 0.8125rem; line-height: 1.35; }
+.role-option:focus-within { outline: 3px solid var(--color-teal); outline-offset: 2px; }
+.auth-cta { min-height: 3.25rem; font-size: 1.0625rem; font-weight: 600; margin-top: 0.25rem; }
+.auth-show { display: inline-flex; align-items: center; gap: 0.35rem; min-height: 2.5rem; margin-top: 0.4rem; color: var(--color-teal); font-size: 0.85rem; font-weight: 600; }
+.auth-switch { margin-top: 1.25rem; text-align: center; color: var(--color-ink-soft); }
+.auth-link { color: var(--color-teal); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; min-height: 2.75rem; }
+.auth-demo-note { margin-top: 0.9rem; text-align: center; color: var(--color-ink-faint); font-size: 0.75rem; }
+.auth-success-ico { display: inline-flex; width: 4rem; height: 4rem; align-items: center; justify-content: center; border-radius: 999px; background: var(--color-green-bg); color: var(--color-green-ink); }
+.auth-actions { margin-top: 1.25rem; }
+@media (max-width: 400px) { .role-grid { grid-template-columns: 1fr; } }
+
 /* Home redesenhada — receita em destaque, acessível e mobile-first. */
 .rx-hero { background: linear-gradient(180deg, #e8f1fd, #dbeafb); border: 1px solid #cfe0f6; border-radius: 1.25rem; padding: clamp(1.25rem, 3.5vw, 1.9rem); }
 .rx-hero-head { display: flex; align-items: flex-start; gap: 0.9rem; }

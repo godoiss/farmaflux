@@ -34,8 +34,8 @@ export function WelcomePage() {
           <Link to="/inicio" className="btn hero-primary welcome-cta">
             Entrar no FarmaFlux <ArrowRight size={18} aria-hidden />
           </Link>
-          <Link to="/ajuda" className="welcome-secondary">
-            Como funciona?
+          <Link to="/cadastro" className="welcome-secondary">
+            Criar conta
           </Link>
         </div>
 
