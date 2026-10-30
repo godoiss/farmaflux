@@ -21,6 +21,14 @@ Requisitos: Node 18+. Sem backend, chaves de API ou internet depois de carregar 
 
 Verificações: `npm run typecheck` · `npm run lint` · `npm test` (regras de domínio) · `python3 tests/e2e.py` e `python3 tests/smoke.py` (Playwright, com o preview rodando em :4173).
 
+## Publicação automática
+
+O projeto `farmaflux` da Vercel está conectado ao repositório [godoiss/farmaflux](https://github.com/godoiss/farmaflux).
+
+Cada push na branch `main` inicia um deploy de produção. Quando o build termina com sucesso, a nova versão fica disponível em [farmaflux.vercel.app](https://farmaflux.vercel.app).
+
+Antes de enviar alterações, execute `npm run build`, `npm run lint` e os testes relevantes. O andamento das publicações pode ser acompanhado no painel do projeto na Vercel.
+
 ## Arquitetura
 
 ```
