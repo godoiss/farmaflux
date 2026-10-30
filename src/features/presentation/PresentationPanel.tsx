@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Clock, RotateCcw } from 'lucide-react';
+import { Clock, RotateCcw, Projector } from 'lucide-react';
 import { Dialog, ConfirmDialog } from '../../components/ui/Dialog';
 import { Button } from '../../components/ui/Button';
 import { MaskedField } from '../../components/ui/Field';
@@ -92,6 +92,24 @@ export function PresentationPanel({ open, onClose }: { open: boolean; onClose: (
             </Button>
           </form>
           <p className="text-sm text-ink-soft">Vencimentos, prazos, horários e lembretes são recalculados com este relógio.</p>
+        </section>
+
+        <section aria-labelledby="opening-title" className="mt-8 space-y-3">
+          <h3 id="opening-title" className="text-lg font-bold">
+            Tela de abertura
+          </h3>
+          <p className="text-sm text-ink-soft">Fundo animado da marca para iniciar o pitch no Demo Day.</p>
+          <Button
+            variant="secondary"
+            block
+            icon={<Projector size={18} aria-hidden />}
+            onClick={() => {
+              onClose();
+              navigate('/bem-vindo');
+            }}
+          >
+            Abrir tela de abertura
+          </Button>
         </section>
 
         <section aria-labelledby="scenario-title" className="mt-8 space-y-3">

@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { AppShell } from './components/layout/AppShell';
 import { NotFound } from './components/layout/NotFound';
+import { WelcomePage } from './features/welcome/WelcomePage';
 import { HomePage } from './features/home/HomePage';
 import { PrescriptionsPage } from './features/prescriptions/PrescriptionsPage';
 import { IntakePage } from './features/prescriptions/IntakePage';
@@ -15,6 +16,7 @@ import { ProfilePage } from './features/profile/ProfilePage';
 import { HelpPage } from './features/help/HelpPage';
 
 const router = createBrowserRouter([
+  { path: '/bem-vindo', element: <WelcomePage /> },
   {
     element: <AppShell />,
     children: [
