@@ -46,7 +46,17 @@ export function CadastroPage() {
     setLoading(false);
 
     if (error) {
-      setErrors({ geral: 'Não foi possível criar a conta. Verifique os dados ou tente entrar se o e-mail já estiver cadastrado.' });
+      const code = error.code ?? '';
+      const msg = (error.message ?? '').toLowerCase();
+      let geral = 'Não foi possível criar a conta. Verifique os dados e tente novamente.';
+      if (code === 'over_email_send_rate_limit' || error.status === 429) {
+        geral = 'Muitas tentativas agora. Aguarde alguns minutos e tente de novo.';
+      } else if (code === 'user_already_exists' || msg.includes('already registered') || msg.includes('already been registered')) {
+        geral = 'Este e-mail já tem uma conta. Toque em "Entrar" para acessar.';
+      } else if (msg.includes('invalid') && msg.includes('email')) {
+        geral = 'E-mail inválido. Confira o endereço digitado.';
+      }
+      setErrors({ geral });
       return;
     }
     setDone(data.session ? 'entrou' : 'confirmar-email');
