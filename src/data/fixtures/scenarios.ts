@@ -19,7 +19,7 @@ const PEOPLE: Person[] = [
   { id: 'person-maria', name: 'Dona Maria', role: 'assisted' },
 ];
 
-const PROFILE: Profile = { displayName: 'Ana', mode: 'helping', selfPersonId: 'person-ana', assistedPersonId: 'person-maria' };
+const PROFILE: Profile = { displayName: 'Ana', mode: 'self', selfPersonId: 'person-ana', assistedPersonId: 'person-maria' };
 
 function prescriptionFrom(sampleId: string, opts: { confirmed: boolean; id?: string; title?: string; personId?: string }): Prescription {
   const sample = findSample(sampleId);

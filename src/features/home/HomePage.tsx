@@ -10,13 +10,11 @@ import { ContextSwitch } from '../profile/ContextSwitch';
 import { computeJourney } from './journey';
 import { useAuth } from '../../state/AuthProvider';
 import { accountDisplayName } from '../../lib/accountName';
-import { activePerson } from '../../state/selectors';
 
 export function HomePage() {
   const { data } = useStore();
   const { user } = useAuth();
   const accountName = accountDisplayName(user);
-  const greetingName = data.profile.mode === 'helping' ? activePerson(data).name : accountName;
   const journey = computeJourney(data);
   const prescriptions = prescriptionsOfActive(data);
   const reminders = reminderBuckets(data);
@@ -43,7 +41,7 @@ export function HomePage() {
       <header className="home-heading">
         <div>
           <p className="eyebrow">Seu espaço de cuidado</p>
-          <h1 id="home-title" tabIndex={-1}>Olá, {greetingName}<span className="text-teal">.</span></h1>
+          <h1 id="home-title" tabIndex={-1}>Olá, {accountName}<span className="text-teal">.</span></h1>
           <p>Acesse sua receita e suas informações de saúde com facilidade.</p>
         </div>
         <div className="home-date">
@@ -51,14 +49,6 @@ export function HomePage() {
           <div><span>{weekdayName(weekday(datePart(data.clock)))}</span><small>{formatDateTime(data.clock)} · demo</small></div>
         </div>
       </header>
-
-      <section className="care-context" aria-label="Pessoa dos registros">
-        <div className="flex min-w-0 items-center gap-3">
-          <span className="person-avatar" aria-hidden>{accountName.charAt(0).toUpperCase()}</span>
-          <p><span className="block text-xs text-ink-soft">Conta de</span><strong className="font-semibold">{accountName}</strong></p>
-        </div>
-        <ContextSwitch label="Esta organização é" />
-      </section>
 
       {/* Prioridade 1 — a receita médica */}
       <section className="rx-hero" aria-labelledby="rx-hero-title">
