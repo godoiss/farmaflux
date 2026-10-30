@@ -71,7 +71,7 @@
 
 @layer components {
   .btn {
-    @apply inline-flex min-h-11 items-center justify-center gap-2.5 rounded-[0.625rem] px-5 py-2.5 text-[0.9375rem] font-medium select-none;
+    @apply inline-flex min-h-12 items-center justify-center gap-2.5 rounded-[0.625rem] px-5 py-2.5 text-[1rem] font-medium select-none;
     transition: background-color 180ms ease, color 180ms ease, box-shadow 180ms ease, transform 160ms ease, border-color 180ms ease;
   }
   .btn:active:not(:disabled) {
@@ -120,7 +120,7 @@
     @apply bg-red-bg;
   }
   .btn-icon {
-    @apply inline-flex size-11 items-center justify-center rounded-xl text-ink-soft;
+    @apply inline-flex size-12 items-center justify-center rounded-xl text-ink-soft;
     transition: background-color 180ms ease, color 180ms ease;
   }
   .btn-icon:hover {
