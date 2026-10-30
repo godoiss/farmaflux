@@ -1,12 +1,11 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
-import { ArrowUpRight, Bell, Building2, ChevronRight, CircleHelp, FileText, House, ListChecks, MonitorPlay, UserRound, type LucideIcon } from 'lucide-react';
+import { ArrowUpRight, Bell, Building2, ChevronRight, CircleHelp, FileText, House, Landmark, ListChecks, MessagesSquare, UserRound, type LucideIcon } from 'lucide-react';
 import { Logo } from '../brand/Logo';
 import { DemoBadge } from './DemoBadge';
 import { StatusBanners } from './StatusBanners';
 import { useStore } from '../../state/AppStore';
 import { activePerson, unreadCount } from '../../state/selectors';
-import { formatDateTime } from '../../domain/time';
 import { USAGE_MODE_LABEL } from '../../domain/labels';
 import { NotificationCenter } from '../../features/notifications/NotificationCenter';
 import { PresentationPanel } from '../../features/presentation/PresentationPanel';
@@ -24,6 +23,11 @@ const PRIMARY_NAV: NavEntry[] = [
   { to: '/receitas', label: 'Minhas receitas', short: 'Receitas', icon: FileText, match: (p) => p.startsWith('/receitas') },
   { to: '/unidades', label: 'Unidades', short: 'Unidades', icon: Building2, match: (p) => p.startsWith('/unidades') },
   { to: '/lembretes', label: 'Lembretes e planos', short: 'Lembretes', icon: ListChecks, match: (p) => p.startsWith('/lembretes') || p.startsWith('/planos') },
+];
+
+const NETWORK_NAV: NavEntry[] = [
+  { to: '/farmaceuticos', label: 'Farmacêuticos', short: 'Rede', icon: MessagesSquare, match: (p) => p.startsWith('/farmaceuticos') },
+  { to: '/fontes', label: 'Fontes oficiais', short: 'Fontes', icon: Landmark, match: (p) => p.startsWith('/fontes') },
 ];
 
 const SECONDARY_NAV: NavEntry[] = [
@@ -60,7 +64,7 @@ export function AppShell() {
   const [presentationOpen, setPresentationOpen] = useState(false);
   const firstRender = useRef(true);
   const person = activePerson(data);
-  const currentPage = [...PRIMARY_NAV, ...SECONDARY_NAV].find((entry) => entry.match(pathname))?.label ?? 'Seu cuidado';
+  const currentPage = [...PRIMARY_NAV, ...NETWORK_NAV, ...SECONDARY_NAV].find((entry) => entry.match(pathname))?.label ?? 'Seu cuidado';
 
   // Em cada troca de rota: rola ao topo e leva o foco ao título da página.
   useEffect(() => {
@@ -94,6 +98,13 @@ export function AppShell() {
             ))}
           </nav>
           <div className="my-7 border-t border-line" />
+          <p className="nav-caption">Rede</p>
+          <nav aria-label="Rede e fontes" className="flex flex-col gap-1.5">
+            {NETWORK_NAV.map((n) => (
+              <SideLink key={n.to} entry={n} active={n.match(pathname)} />
+            ))}
+          </nav>
+          <div className="my-7 border-t border-line" />
           <p className="nav-caption">Preferências</p>
           <nav aria-label="Conta e ajuda" className="flex flex-col gap-1.5">
             {SECONDARY_NAV.map((n) => (
@@ -102,13 +113,6 @@ export function AppShell() {
           </nav>
           <div className="sidebar-bottom mt-8 space-y-5 border-t border-line pt-7">
             <Link to="/ajuda" className="sidebar-help"><CircleHelp size={22} strokeWidth={1.5} aria-hidden /><span><strong>Podemos ajudar?</strong><small>Entenda cada etapa do cuidado</small></span><ArrowUpRight size={16} aria-hidden /></Link>
-            <button type="button" className="presentation-trigger w-full text-left" onClick={ui.openPresentation}>
-              <MonitorPlay size={20} aria-hidden />
-              <span className="flex flex-col leading-tight">
-                <span>Modo apresentação</span>
-                <span className="text-xs text-ink-faint">{formatDateTime(data.clock)}</span>
-              </span>
-            </button>
             <Link to="/perfil" className="sidebar-profile">
               <span className="person-avatar" aria-hidden>{data.profile.displayName.charAt(0)}</span>
               <span className="min-w-0 flex-1"><strong className="block truncate text-sm font-semibold">{data.profile.displayName}</strong><span className="block text-xs text-ink-soft">{USAGE_MODE_LABEL[data.profile.mode]}</span></span>
@@ -167,15 +171,15 @@ export function AppShell() {
 
       {/* Navegação inferior celular */}
       <nav aria-label="Principal" className="mobile-nav no-print fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl lg:hidden">
-        <ul className="mx-auto grid max-w-lg grid-cols-4">
-          {PRIMARY_NAV.map((n) => {
+        <ul className="mx-auto grid max-w-lg grid-cols-6">
+          {[...PRIMARY_NAV, ...NETWORK_NAV].map((n) => {
             const active = n.match(pathname);
             return (
               <li key={n.to}>
                 <Link
                   to={n.to}
                   aria-current={active ? 'page' : undefined}
-                  className={`flex min-h-16 flex-col items-center justify-center gap-1 text-xs font-semibold transition-colors ${active ? 'text-teal' : 'text-ink-soft hover:text-ink'}`}
+                  className={`flex min-h-16 flex-col items-center justify-center gap-1 px-0.5 text-center text-[0.625rem] leading-tight font-semibold transition-colors ${active ? 'text-teal' : 'text-ink-soft hover:text-ink'}`}
                 >
                   <span className={`flex h-8 w-14 items-center justify-center rounded-full transition-colors ${active ? 'bg-mint' : ''}`}>
                     <n.icon size={21} aria-hidden />

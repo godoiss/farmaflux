@@ -12,6 +12,8 @@ import { UnitDetailPage } from './features/units/UnitDetailPage';
 import { PlanFormPage } from './features/plans/PlanFormPage';
 import { PlanDetailPage } from './features/plans/PlanDetailPage';
 import { RemindersPage } from './features/reminders/RemindersPage';
+import { PharmacistsPage } from './features/network/PharmacistsPage';
+import { SourcesPage } from './features/network/SourcesPage';
 import { ProfilePage } from './features/profile/ProfilePage';
 import { HelpPage } from './features/help/HelpPage';
 
@@ -32,6 +34,8 @@ const router = createBrowserRouter([
       { path: '/planos/:id', element: <PlanDetailPage /> },
       { path: '/planos/:id/editar', element: <PlanFormPage mode="edit" /> },
       { path: '/lembretes', element: <RemindersPage /> },
+      { path: '/farmaceuticos', element: <PharmacistsPage /> },
+      { path: '/fontes', element: <SourcesPage /> },
       { path: '/perfil', element: <ProfilePage /> },
       { path: '/ajuda', element: <HelpPage /> },
       { path: '*', element: <NotFound /> },
