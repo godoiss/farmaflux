@@ -3,15 +3,18 @@ import { ArrowRight, ArrowUpRight, BellRing, CalendarDays, Check, ChevronDown, F
 import { LinkButton } from '../../components/ui/Button';
 import { StatusPill } from '../../components/ui/Display';
 import { useStore } from '../../state/AppStore';
-import { activePerson, prescriptionsOfActive, reminderBuckets } from '../../state/selectors';
+import { prescriptionsOfActive, reminderBuckets } from '../../state/selectors';
 import { currentVersionOf } from '../../domain/rules/planRules';
 import { formatDateTime, datePart, weekday, weekdayName } from '../../domain/time';
 import { ContextSwitch } from '../profile/ContextSwitch';
 import { computeJourney } from './journey';
+import { useAuth } from '../../state/AuthProvider';
+import { accountDisplayName } from '../../lib/accountName';
 
 export function HomePage() {
   const { data } = useStore();
-  const person = activePerson(data);
+  const { user } = useAuth();
+  const accountName = accountDisplayName(user);
   const journey = computeJourney(data);
   const prescriptions = prescriptionsOfActive(data);
   const reminders = reminderBuckets(data);
@@ -38,7 +41,7 @@ export function HomePage() {
       <header className="home-heading">
         <div>
           <p className="eyebrow">Seu espaço de cuidado</p>
-          <h1 id="home-title" tabIndex={-1}>Olá, {data.profile.displayName}<span className="text-teal">.</span></h1>
+          <h1 id="home-title" tabIndex={-1}>Olá, {accountName}<span className="text-teal">.</span></h1>
           <p>Acesse sua receita e suas informações de saúde com facilidade.</p>
         </div>
         <div className="home-date">
@@ -49,8 +52,8 @@ export function HomePage() {
 
       <section className="care-context" aria-label="Pessoa dos registros">
         <div className="flex min-w-0 items-center gap-3">
-          <span className="person-avatar" aria-hidden>{person.name.replace(/^Dona\s+/i, '').charAt(0)}</span>
-          <p><span className="block text-xs text-ink-soft">Organizando o cuidado de</span><strong className="font-semibold">{person.name}</strong></p>
+          <span className="person-avatar" aria-hidden>{accountName.charAt(0).toUpperCase()}</span>
+          <p><span className="block text-xs text-ink-soft">Conta de</span><strong className="font-semibold">{accountName}</strong></p>
         </div>
         <ContextSwitch label="Esta organização é" />
       </section>

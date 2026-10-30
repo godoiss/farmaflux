@@ -1,11 +1,13 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
-import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
-import { ArrowUpRight, Bell, Building2, ChevronRight, CircleHelp, FileText, House, Landmark, ListChecks, MessagesSquare, UserRound, type LucideIcon } from 'lucide-react';
+import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { ArrowUpRight, Bell, Building2, ChevronRight, CircleHelp, FileText, House, Landmark, ListChecks, LogOut, MessagesSquare, UserRound, type LucideIcon } from 'lucide-react';
+import { useAuth } from '../../state/AuthProvider';
+import { accountDisplayName } from '../../lib/accountName';
 import { Logo } from '../brand/Logo';
 import { DemoBadge } from './DemoBadge';
 import { StatusBanners } from './StatusBanners';
 import { useStore } from '../../state/AppStore';
-import { activePerson, unreadCount } from '../../state/selectors';
+import { unreadCount } from '../../state/selectors';
 import { USAGE_MODE_LABEL } from '../../domain/labels';
 import { NotificationCenter } from '../../features/notifications/NotificationCenter';
 import { PresentationPanel } from '../../features/presentation/PresentationPanel';
@@ -60,10 +62,16 @@ function BellButton({ onClick }: { onClick: () => void }) {
 export function AppShell() {
   const { data } = useStore();
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const { signOut, user } = useAuth();
+  const accountName = accountDisplayName(user);
+  const handleLogout = async () => {
+    await signOut();
+    navigate('/entrar', { replace: true });
+  };
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [presentationOpen, setPresentationOpen] = useState(false);
   const firstRender = useRef(true);
-  const person = activePerson(data);
   const currentPage = [...PRIMARY_NAV, ...NETWORK_NAV, ...SECONDARY_NAV].find((entry) => entry.match(pathname))?.label ?? 'Seu cuidado';
 
   // Em cada troca de rota: rola ao topo e leva o foco ao título da página.
@@ -114,10 +122,13 @@ export function AppShell() {
           <div className="sidebar-bottom mt-8 space-y-5 border-t border-line pt-7">
             <Link to="/ajuda" className="sidebar-help"><CircleHelp size={22} strokeWidth={1.5} aria-hidden /><span><strong>Podemos ajudar?</strong><small>Entenda cada etapa do cuidado</small></span><ArrowUpRight size={16} aria-hidden /></Link>
             <Link to="/perfil" className="sidebar-profile">
-              <span className="person-avatar" aria-hidden>{data.profile.displayName.charAt(0)}</span>
-              <span className="min-w-0 flex-1"><strong className="block truncate text-sm font-semibold">{data.profile.displayName}</strong><span className="block text-xs text-ink-soft">{USAGE_MODE_LABEL[data.profile.mode]}</span></span>
+              <span className="person-avatar" aria-hidden>{accountName.charAt(0).toUpperCase()}</span>
+              <span className="min-w-0 flex-1"><strong className="block truncate text-sm font-semibold">{accountName}</strong><span className="block text-xs text-ink-soft">{USAGE_MODE_LABEL[data.profile.mode]}</span></span>
               <ChevronRight size={16} className="text-ink-faint" aria-hidden />
             </Link>
+            <button type="button" onClick={handleLogout} className="btn btn-secondary w-full">
+              <LogOut size={18} aria-hidden /> Sair da conta
+            </button>
           </div>
         </aside>
 
@@ -136,12 +147,12 @@ export function AppShell() {
                 <NavLink to="/perfil" className="btn-icon" aria-label="Perfil e acessibilidade">
                   <UserRound size={22} aria-hidden />
                 </NavLink>
+                <button type="button" onClick={handleLogout} className="btn-icon" aria-label="Sair da conta">
+                  <LogOut size={22} aria-hidden />
+                </button>
               </div>
             </div>
-            <div className="flex items-center justify-between gap-2 px-4 pt-1 pb-2 text-xs">
-              <span className="truncate font-medium text-ink-soft">
-                Para: <strong className="text-ink">{person.name}</strong>
-              </span>
+            <div className="flex items-center justify-end gap-2 px-4 pt-1 pb-2 text-xs">
               <DemoBadge className="py-0.5" />
             </div>
           </header>
@@ -153,9 +164,9 @@ export function AppShell() {
               <DemoBadge className="mr-3" />
               <Link to="/perfil" className="btn btn-ghost min-h-11 px-3 text-sm">
                 <span className="person-avatar person-avatar-small" aria-hidden>
-                  {person.name.replace(/^Dona\s+/i, '').charAt(0).toUpperCase()}
+                  {accountName.charAt(0).toUpperCase()}
                 </span>
-                <span className="font-medium">{person.name}</span>
+                <span className="font-medium">{accountName}</span>
               </Link>
               <BellButton onClick={ui.openNotifications} />
             </div>
