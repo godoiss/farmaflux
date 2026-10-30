@@ -35,7 +35,7 @@ export function WelcomePage() {
         </p>
 
         <div className="welcome-actions">
-          <Link to="/" className="btn hero-primary welcome-cta">
+          <Link to="/inicio" className="btn hero-primary welcome-cta">
             Entrar no FarmaFlux <ArrowRight size={18} aria-hidden />
           </Link>
           <Link to="/ajuda" className="welcome-secondary">

@@ -50,7 +50,7 @@ export function PresentationPanel({ open, onClose }: { open: boolean; onClose: (
     resetScenario(scenario);
     setConfirmReset(false);
     onClose();
-    navigate('/');
+    navigate('/inicio');
     announce(`Cenário ${SCENARIOS[scenario].title} reiniciado.`);
   };
 
@@ -105,7 +105,7 @@ export function PresentationPanel({ open, onClose }: { open: boolean; onClose: (
             icon={<Projector size={18} aria-hidden />}
             onClick={() => {
               onClose();
-              navigate('/bem-vindo');
+              navigate('/');
             }}
           >
             Abrir tela de abertura

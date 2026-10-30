@@ -20,7 +20,7 @@ interface NavEntry {
 }
 
 const PRIMARY_NAV: NavEntry[] = [
-  { to: '/', label: 'Início', short: 'Início', icon: House, match: (p) => p === '/' },
+  { to: '/inicio', label: 'Início', short: 'Início', icon: House, match: (p) => p === '/inicio' },
   { to: '/receitas', label: 'Minhas receitas', short: 'Receitas', icon: FileText, match: (p) => p.startsWith('/receitas') },
   { to: '/unidades', label: 'Unidades', short: 'Unidades', icon: Building2, match: (p) => p.startsWith('/unidades') },
   { to: '/lembretes', label: 'Lembretes e planos', short: 'Lembretes', icon: ListChecks, match: (p) => p.startsWith('/lembretes') || p.startsWith('/planos') },
@@ -84,7 +84,7 @@ export function AppShell() {
       <div className="app-layout min-h-dvh lg:grid lg:grid-cols-[15.5rem_minmax(0,1fr)]">
         {/* Sidebar desktop */}
         <aside className="app-sidebar no-print sticky top-0 hidden h-dvh flex-col border-r border-line bg-surface px-5 py-8 lg:flex">
-          <Link to="/" className="brand-link mb-12 rounded-xl px-2 py-1" aria-label="FarmaFlux, ir para o início">
+          <Link to="/inicio" className="brand-link mb-12 rounded-xl px-2 py-1" aria-label="FarmaFlux, ir para o início">
             <Logo />
           </Link>
           <p className="nav-caption">Seu espaço</p>
@@ -121,7 +121,7 @@ export function AppShell() {
           {/* Cabeçalho celular */}
           <header className="mobile-header no-print sticky top-0 z-30 border-b border-line bg-canvas/90 backdrop-blur-xl lg:hidden">
             <div className="flex items-center justify-between gap-2 px-3 pt-2">
-              <Link to="/" className="rounded-xl px-1 py-1" aria-label="FarmaFlux, ir para o início">
+              <Link to="/inicio" className="rounded-xl px-1 py-1" aria-label="FarmaFlux, ir para o início">
                 <Logo compact />
               </Link>
               <div className="flex items-center">

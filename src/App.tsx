@@ -16,11 +16,11 @@ import { ProfilePage } from './features/profile/ProfilePage';
 import { HelpPage } from './features/help/HelpPage';
 
 const router = createBrowserRouter([
-  { path: '/bem-vindo', element: <WelcomePage /> },
+  { path: '/', element: <WelcomePage /> },
   {
     element: <AppShell />,
     children: [
-      { path: '/', element: <HomePage /> },
+      { path: '/inicio', element: <HomePage /> },
       { path: '/receitas', element: <PrescriptionsPage /> },
       { path: '/receitas/nova', element: <IntakePage mode="new" /> },
       { path: '/receitas/:id', element: <PrescriptionDetailPage /> },

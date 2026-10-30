@@ -18,7 +18,7 @@ export function NotFound({ what }: { what?: 'receita' | 'unidade' | 'plano' }) {
           <>
             <LinkButton to={back}>{what ? 'Voltar para a lista' : 'Ir para o início'}</LinkButton>
             {what && (
-              <LinkButton to="/" variant="secondary">
+              <LinkButton to="/inicio" variant="secondary">
                 Início
               </LinkButton>
             )}
