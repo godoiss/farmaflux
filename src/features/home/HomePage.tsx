@@ -1,4 +1,4 @@
-﻿import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight, BellRing, CalendarDays, Check, ChevronDown, FileText, ListChecks, Pill, Plus, ShieldCheck } from 'lucide-react';
 import { LinkButton } from '../../components/ui/Button';
 import { StatusPill } from '../../components/ui/Display';
@@ -10,11 +10,13 @@ import { ContextSwitch } from '../profile/ContextSwitch';
 import { computeJourney } from './journey';
 import { useAuth } from '../../state/AuthProvider';
 import { accountDisplayName } from '../../lib/accountName';
+import { activePerson } from '../../state/selectors';
 
 export function HomePage() {
   const { data } = useStore();
   const { user } = useAuth();
   const accountName = accountDisplayName(user);
+  const greetingName = data.profile.mode === 'helping' ? activePerson(data).name : accountName;
   const journey = computeJourney(data);
   const prescriptions = prescriptionsOfActive(data);
   const reminders = reminderBuckets(data);
@@ -41,7 +43,7 @@ export function HomePage() {
       <header className="home-heading">
         <div>
           <p className="eyebrow">Seu espaço de cuidado</p>
-          <h1 id="home-title" tabIndex={-1}>Olá, {accountName}<span className="text-teal">.</span></h1>
+          <h1 id="home-title" tabIndex={-1}>Olá, {greetingName}<span className="text-teal">.</span></h1>
           <p>Acesse sua receita e suas informações de saúde com facilidade.</p>
         </div>
         <div className="home-date">
