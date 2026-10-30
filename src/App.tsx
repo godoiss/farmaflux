@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { IntroGate } from './features/intro/IntroGate';
 import { AppShell } from './components/layout/AppShell';
 import { NotFound } from './components/layout/NotFound';
 import { WelcomePage } from './features/welcome/WelcomePage';
@@ -44,5 +45,10 @@ const router = createBrowserRouter([
 ]);
 
 export function App() {
-  return <RouterProvider router={router} future={{ v7_startTransition: true }} />;
+  return (
+    <>
+      <RouterProvider router={router} future={{ v7_startTransition: true }} />
+      <IntroGate />
+    </>
+  );
 }

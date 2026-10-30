@@ -8,7 +8,6 @@ import { STATUS_COPY } from '../../domain/rules/preCheck';
 import { formatDateTime, datePart, weekday, weekdayName } from '../../domain/time';
 import { ContextSwitch } from '../profile/ContextSwitch';
 import { computeJourney } from './journey';
-import { ShaderBackground, HOME_UNIFORMS } from '../../components/ui/mesh-drift-shader';
 
 export function HomePage() {
   const { data } = useStore();
@@ -27,11 +26,6 @@ export function HomePage() {
 
   return (
     <div className="home-page">
-      <div className="home-ambient" aria-hidden>
-        <ShaderBackground className="home-ambient-shader" uniforms={HOME_UNIFORMS} />
-        <div className="home-ambient-scrim" />
-      </div>
-
       <header className="home-heading">
         <div>
           <p className="eyebrow">Seu espaço de cuidado</p>
@@ -67,7 +61,7 @@ export function HomePage() {
             <h2 id="hero-title">Sua próxima retirada<br />começa aqui.</h2>
             <p className="hero-description">Confira sua receita e organize tudo o que precisa antes de sair de casa.</p>
             <div className="hero-actions">
-              <LinkButton to={checkTarget} className="hero-primary" iconRight={<ArrowRight size={18} aria-hidden />}>Conferir receita</LinkButton>
+              <LinkButton to={checkTarget} className="hero-primary" iconRight={<ArrowRight size={18} aria-hidden />}>Ver minha receita</LinkButton>
               <Link to="/unidades" className="hero-secondary">Ver unidades <ArrowUpRight size={17} aria-hidden /></Link>
             </div>
           </div>

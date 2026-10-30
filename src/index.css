@@ -567,7 +567,7 @@
     min-height: 100dvh;
     overflow: hidden;
     padding: clamp(2.5rem, 9vh, 5.5rem) 1.5rem calc(2rem + env(safe-area-inset-bottom));
-    background: #0b2620;
+    background: #0b1f3a;
     color: #fff;
     text-align: center;
     isolation: isolate;
@@ -579,8 +579,8 @@
     z-index: 1;
     pointer-events: none;
     background:
-      radial-gradient(120% 75% at 50% 50%, rgb(8 33 27 / 0.6) 0%, rgb(8 33 27 / 0.22) 48%, transparent 74%),
-      linear-gradient(to bottom, rgb(8 33 27 / 0.45) 0%, transparent 26%, transparent 74%, rgb(8 33 27 / 0.45) 100%);
+      radial-gradient(120% 75% at 50% 50%, rgb(7 18 38 / 0.6) 0%, rgb(7 18 38 / 0.22) 48%, transparent 74%),
+      linear-gradient(to bottom, rgb(7 18 38 / 0.45) 0%, transparent 26%, transparent 74%, rgb(7 18 38 / 0.45) 100%);
   }
   .welcome-content {
     position: relative;
@@ -610,7 +610,7 @@
     border: 1px solid rgb(255 255 255 / 0.22);
     border-radius: 999px;
     background: rgb(255 255 255 / 0.08);
-    color: #e8f3e5;
+    color: #dbe8fb;
     font-size: 0.6875rem;
     font-weight: 600;
     letter-spacing: 0.12em;
@@ -630,10 +630,10 @@
   .welcome-subtitle {
     margin-top: 1.1rem;
     max-width: 34rem;
-    color: #d6e6dc;
+    color: #cfe0f6;
     font-size: clamp(0.95rem, 2.4vw, 1.0625rem);
     line-height: 1.6;
-    text-shadow: 0 1px 12px rgb(5 24 19 / 0.5);
+    text-shadow: 0 1px 12px rgb(5 16 34 / 0.5);
   }
   .welcome-actions {
     display: flex;
@@ -648,23 +648,23 @@
     display: inline-flex;
     align-items: center;
     min-height: 2.75rem;
-    color: #e1eade;
+    color: #dbe8fb;
     font-size: 0.9375rem;
     font-weight: 500;
     text-decoration: underline;
     text-underline-offset: 4px;
-    text-decoration-color: rgb(225 234 222 / 0.4);
+    text-decoration-color: rgb(219 232 251 / 0.4);
   }
   .welcome-secondary:hover { color: var(--color-accent); }
   .welcome :focus-visible { outline-color: var(--color-accent); }
   .welcome-note {
     margin-top: 2.5rem;
     max-width: 30rem;
-    color: #aec6b8;
+    color: #a9c0e0;
     font-size: 0.75rem;
     line-height: 1.6;
   }
-  .welcome-note strong { color: #e8f3e5; font-weight: 600; }
+  .welcome-note strong { color: #dbe8fb; font-weight: 600; }
 
   @media (max-width: 640px) {
     .welcome-brand { margin-bottom: 0.75rem; }
@@ -677,77 +677,99 @@
   .route-content { animation: none; }
 }
 
+/* Abertura animada (primeira visita): dois farmacêuticos liberam a receita. */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: radial-gradient(circle at 50% 38%, #123a6b 0%, #08142b 70%);
+  overflow: hidden;
+  animation: intro-in 0.4s ease both;
+}
+.intro-leaving { opacity: 0; transition: opacity 0.6s ease; pointer-events: none; }
+.intro-stage { width: min(96vw, 960px); height: auto; max-height: 76vh; }
+.intro-brand { position: absolute; inset-inline: 0; bottom: clamp(1.75rem, 7vh, 4.5rem); text-align: center; pointer-events: none; }
+.intro-logo { font-family: var(--font-display); font-size: clamp(1.4rem, 4vw, 2rem); font-weight: 600; letter-spacing: -0.03em; color: #fff; }
+.intro-logo span { color: var(--color-accent); }
+.intro-tagline { margin-top: 0.4rem; color: #a9c0e0; font-size: 0.9rem; opacity: 0; transform: translateY(6px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.intro-tagline.is-on { opacity: 1; transform: none; }
+.intro-skip {
+  position: absolute;
+  top: clamp(1rem, 3vh, 1.6rem);
+  right: clamp(1rem, 3vw, 1.6rem);
+  min-height: 2.5rem;
+  padding: 0.4rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid rgb(255 255 255 / 0.2);
+  background: rgb(255 255 255 / 0.06);
+  color: #dbeae2;
+  font-size: 0.85rem;
+  font-weight: 500;
+  backdrop-filter: blur(4px);
+  transition: background 0.18s ease, color 0.18s ease;
+}
+.intro-skip:hover { background: rgb(255 255 255 / 0.12); color: #fff; }
+@keyframes intro-in { from { opacity: 0; } }
+
 /* ===========================================================================
-   Tema escuro verde (sistema inteiro). Redefine os tokens de cor — a maioria
-   dos componentes usa bg-surface / text-ink / border-line etc. e adapta sozinha
-   — e corrige as superfícies de cor fixa. Regras sem @layer vencem o @layer
-   components na cascata. Impressão volta ao claro mais abaixo.
+   Identidade FarmaFlux — azul-claro (tema claro). Redefine os tokens de cor; a
+   maioria dos componentes usa bg-surface / text-ink / border-line etc. e adapta
+   sozinha. Regras sem @layer vencem o @layer components na cascata.
    =========================================================================== */
 :root {
-  --color-canvas: #0a1f1a;
-  --color-surface: #12332c;
-  --color-ink: #e9f2ed;
-  --color-ink-soft: #abc4b9;
-  --color-ink-faint: #85a093;
-  --color-line: #23463d;
-  --color-line-strong: #335a4f;
+  --color-canvas: #eef4fb;
+  --color-surface: #ffffff;
+  --color-ink: #10233f;
+  --color-ink-soft: #4b5f7a;
+  --color-ink-faint: #76889f;
+  --color-line: #dce7f3;
+  --color-line-strong: #c4d6ea;
 
-  --color-teal: #5fc7ac;
-  --color-teal-strong: #6fd3b9;
-  --color-teal-deep: #2f8f79;
-  --color-mint: #173a32;
-  --color-mint-strong: #1f4d42;
-  --color-mint-ink: #c3ead3;
-  --color-accent: #cde86f;
+  --color-teal: #2d6cd4;
+  --color-teal-strong: #2259bb;
+  --color-teal-deep: #15386f;
+  --color-mint: #e4eefb;
+  --color-mint-strong: #cfe0f8;
+  --color-mint-ink: #194a93;
+  --color-accent: #bcdcff;
 
-  --color-amber-bg: #38301a;
-  --color-amber-line: #574824;
-  --color-amber-ink: #ecc579;
-  --color-red-bg: #3a1e1b;
-  --color-red-line: #6a322c;
-  --color-red-ink: #ef8279;
-  --color-green-bg: #123a2b;
-  --color-green-ink: #7fd8a9;
-  --color-neutral-bg: #16352e;
+  --color-amber-bg: #fdf3da;
+  --color-amber-line: #ecd9ab;
+  --color-amber-ink: #8a5a1b;
+  --color-red-bg: #fdeceb;
+  --color-red-line: #f3b9b4;
+  --color-red-ink: #b42318;
+  --color-green-bg: #e3f6ec;
+  --color-green-ink: #0f6643;
+  --color-neutral-bg: #eef3fa;
 
-  --shadow-soft: 0 2px 4px rgb(0 0 0 / 0.28);
-  --shadow-lift: 0 12px 36px -16px rgb(0 0 0 / 0.65);
+  --shadow-soft: 0 2px 4px rgb(16 35 63 / 0.04);
+  --shadow-lift: 0 12px 34px -16px rgb(16 35 63 / 0.18);
 }
 
 ::selection { background: var(--color-mint-strong); color: var(--color-ink); }
 
-/* Superfícies da home com cor fixa → variantes escuras. */
-.care-context .segmented { background: var(--color-neutral-bg); border-color: var(--color-line); }
-.journey-section { background: var(--color-surface); }
-.journey-node { background: var(--color-surface); }
-.is-current .journey-node { background: var(--color-surface); }
-.plan-overview { background: var(--color-surface); border-color: var(--color-line); }
-.document-icon { background: var(--color-surface); border-color: var(--color-line); }
-.person-avatar { background: #1f4a3f; color: #cde8d9; border-color: #2f5e51; }
-.care-hero { box-shadow: 0 0 0 1px rgb(255 255 255 / 0.07), var(--shadow-lift); }
+/* Superfícies com cor fixa → azul-claro. */
+.care-hero { background: #15386f; box-shadow: var(--shadow-lift); }
+.flow-art svg { stroke: #9cc0ef; }
+.flow-art .flow-dot { fill: #bcdcff; }
+.hero-primary { background: var(--color-accent); color: #0f2a52; }
+.hero-primary:hover:not(:disabled) { background: #d6e9ff; color: #0f2a52; }
+.person-avatar { background: #dce9fb; color: #1b4a8a; border-color: #c2d8f2; }
 
-.prescriptions-overview { background: #0f2f33; border-color: #26514a; }
-.prescriptions-overview .overview-icon { color: #8ecbe3; background: #123842; }
-.prescriptions-overview .count-badge { border-color: #2d5560; color: #9fd2e6; background: rgb(255 255 255 / 0.04); }
-.prescription-row { border-bottom-color: #244a44; }
-.prescription-row:hover { background: #163c37; }
+.prescriptions-overview { background: #eaf2fd; border-color: #cfe0f6; }
+.prescriptions-overview .overview-icon { color: #2259bb; background: #dceafa; }
+.prescriptions-overview .count-badge { border-color: #c3d8f2; color: #2259bb; background: #ffffffcc; }
+.prescription-row { border-bottom-color: #dceafa; }
+.prescription-row:hover { background: #eef5fd; }
 
-.reminder-overview { background: #33290f; border-color: #5a4a22; }
-.reminder-overview .overview-icon { color: #e9c879; background: #4a3a18; }
-.reminder-item { border-top-color: #5a4a22; }
-.reminder-empty { border-top-color: #5a4a22; }
+.reminder-overview { background: #fdf3da; border-color: #ecd9ab; }
+.reminder-overview .overview-icon { color: #8a5a1b; background: #f6e8c8; }
+.reminder-item { border-top-color: #ecd9ab; }
+.reminder-empty { border-top-color: #ecd9ab; }
 
-/* Toast permanece escuro com texto claro (bg-ink viraria claro). */
-.toast { background: #0e2a24; color: var(--color-ink); }
-
-/* Impressão sempre no claro, independente do tema. */
-@media print {
-  :root {
-    --color-canvas: #ffffff;
-    --color-surface: #ffffff;
-    --color-ink: #142d3b;
-    --color-ink-soft: #334;
-    --color-line: #ccc;
-  }
-  body { background: #fff !important; color: #142d3b !important; }
-}
+/* Toast escuro (navy) com texto claro sobre o tema claro. */
+.toast { background: var(--color-ink); color: #ffffff; }
