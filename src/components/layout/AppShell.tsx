@@ -100,7 +100,7 @@ export function AppShell() {
               <SideLink key={n.to} entry={n} active={n.match(pathname)} />
             ))}
           </nav>
-          <div className="sidebar-bottom mt-auto space-y-5 pt-8">
+          <div className="sidebar-bottom mt-8 space-y-5 border-t border-line pt-7">
             <Link to="/ajuda" className="sidebar-help"><CircleHelp size={22} strokeWidth={1.5} aria-hidden /><span><strong>Podemos ajudar?</strong><small>Entenda cada etapa do cuidado</small></span><ArrowUpRight size={16} aria-hidden /></Link>
             <button type="button" className="presentation-trigger w-full text-left" onClick={ui.openPresentation}>
               <MonitorPlay size={20} aria-hidden />
