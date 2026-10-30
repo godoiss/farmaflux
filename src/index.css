@@ -406,35 +406,17 @@
     pointer-events: none;
   }
   .home-ambient-shader { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.95; }
-  /* Tema escuro: véu verde-escuro aprofunda o fundo e garante contraste do
-     texto claro que fica direto sobre ele (saudação, rótulos, rodapé). */
+  /* Véu discreto sobre o shader para manter a leitura dos textos claros. */
   .home-ambient-scrim {
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(130% 44% at 22% 6%, rgb(6 26 21 / 0.62) 0%, rgb(6 26 21 / 0.26) 60%, transparent 100%),
-      linear-gradient(to bottom, rgb(6 26 21 / 0.42) 0%, rgb(6 26 21 / 0.26) 52%, rgb(6 26 21 / 0.5) 100%);
+      radial-gradient(130% 44% at 22% 6%, rgb(6 26 21 / 0.55) 0%, rgb(6 26 21 / 0.22) 60%, transparent 100%),
+      linear-gradient(to bottom, rgb(6 26 21 / 0.36) 0%, rgb(6 26 21 / 0.22) 52%, rgb(6 26 21 / 0.46) 100%);
   }
   @media (max-width: 767px) {
     .home-ambient { inset: -1rem -1rem -1rem; }
   }
-
-  /* Home no tema verde escuro: área de conteúdo escura, textos sobre o fundo em
-     claro. Os cards permanecem opacos (texto escuro) e flutuam sobre o fundo. */
-  .app-main-home { background: #081f1a; }
-  .home-page .home-heading .eyebrow { color: #8fe0c8; }
-  .home-page .home-heading h1 { color: #ffffff; }
-  .home-page .home-heading h1 .text-teal { color: var(--color-accent); }
-  .home-page .home-heading h1 + p { color: #cadbd1; }
-  .home-page .home-date { color: #bcd2c6; }
-  .home-page .home-date span { color: #eaf3ec; }
-  .home-page .care-context { border-block-color: rgb(255 255 255 / 0.14); }
-  .home-page .care-context p span { color: #a9c3b7; }
-  .home-page .care-context p strong { color: #ffffff; }
-  .home-page .home-note { border-top-color: rgb(255 255 255 / 0.14); color: #aec6b8; }
-  .home-page .home-note a { color: var(--color-accent); }
-  /* Separa o hero (já verde escuro) do fundo escuro com um leve anel claro. */
-  .home-page .care-hero { box-shadow: 0 0 0 1px rgb(255 255 255 / 0.08), var(--shadow-lift); }
   .home-heading { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; margin-bottom: 0.25rem; }
   .home-heading h1 { margin-top: 0.375rem; font-size: clamp(2.1rem, 3vw, 2.75rem); line-height: 1.2; letter-spacing: -0.055em; font-weight: 600; outline: none; }
   .home-heading h1 + p { margin-top: 0.5rem; color: var(--color-ink-soft); font-size: 0.9375rem; }
@@ -693,4 +675,79 @@
 @media print {
   .app-layout { display: block; }
   .route-content { animation: none; }
+}
+
+/* ===========================================================================
+   Tema escuro verde (sistema inteiro). Redefine os tokens de cor — a maioria
+   dos componentes usa bg-surface / text-ink / border-line etc. e adapta sozinha
+   — e corrige as superfícies de cor fixa. Regras sem @layer vencem o @layer
+   components na cascata. Impressão volta ao claro mais abaixo.
+   =========================================================================== */
+:root {
+  --color-canvas: #0a1f1a;
+  --color-surface: #12332c;
+  --color-ink: #e9f2ed;
+  --color-ink-soft: #abc4b9;
+  --color-ink-faint: #85a093;
+  --color-line: #23463d;
+  --color-line-strong: #335a4f;
+
+  --color-teal: #5fc7ac;
+  --color-teal-strong: #6fd3b9;
+  --color-teal-deep: #2f8f79;
+  --color-mint: #173a32;
+  --color-mint-strong: #1f4d42;
+  --color-mint-ink: #c3ead3;
+  --color-accent: #cde86f;
+
+  --color-amber-bg: #38301a;
+  --color-amber-line: #574824;
+  --color-amber-ink: #ecc579;
+  --color-red-bg: #3a1e1b;
+  --color-red-line: #6a322c;
+  --color-red-ink: #ef8279;
+  --color-green-bg: #123a2b;
+  --color-green-ink: #7fd8a9;
+  --color-neutral-bg: #16352e;
+
+  --shadow-soft: 0 2px 4px rgb(0 0 0 / 0.28);
+  --shadow-lift: 0 12px 36px -16px rgb(0 0 0 / 0.65);
+}
+
+::selection { background: var(--color-mint-strong); color: var(--color-ink); }
+
+/* Superfícies da home com cor fixa → variantes escuras. */
+.care-context .segmented { background: var(--color-neutral-bg); border-color: var(--color-line); }
+.journey-section { background: var(--color-surface); }
+.journey-node { background: var(--color-surface); }
+.is-current .journey-node { background: var(--color-surface); }
+.plan-overview { background: var(--color-surface); border-color: var(--color-line); }
+.document-icon { background: var(--color-surface); border-color: var(--color-line); }
+.person-avatar { background: #1f4a3f; color: #cde8d9; border-color: #2f5e51; }
+.care-hero { box-shadow: 0 0 0 1px rgb(255 255 255 / 0.07), var(--shadow-lift); }
+
+.prescriptions-overview { background: #0f2f33; border-color: #26514a; }
+.prescriptions-overview .overview-icon { color: #8ecbe3; background: #123842; }
+.prescriptions-overview .count-badge { border-color: #2d5560; color: #9fd2e6; background: rgb(255 255 255 / 0.04); }
+.prescription-row { border-bottom-color: #244a44; }
+.prescription-row:hover { background: #163c37; }
+
+.reminder-overview { background: #33290f; border-color: #5a4a22; }
+.reminder-overview .overview-icon { color: #e9c879; background: #4a3a18; }
+.reminder-item { border-top-color: #5a4a22; }
+.reminder-empty { border-top-color: #5a4a22; }
+
+/* Toast permanece escuro com texto claro (bg-ink viraria claro). */
+.toast { background: #0e2a24; color: var(--color-ink); }
+
+/* Impressão sempre no claro, independente do tema. */
+@media print {
+  :root {
+    --color-canvas: #ffffff;
+    --color-surface: #ffffff;
+    --color-ink: #142d3b;
+    --color-ink-soft: #334;
+    --color-line: #ccc;
+  }
+  body { background: #fff !important; color: #142d3b !important; }
 }

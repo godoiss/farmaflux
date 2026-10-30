@@ -16,8 +16,8 @@ export function Logo({ compact = false }: { compact?: boolean }) {
   return (
     <span className="inline-flex items-center gap-2.5">
       <LogoMark size={compact ? 32 : 38} />
-      <span className="text-[1.1875rem] font-bold tracking-tight text-[#142d3b]" style={{ fontFamily: "'Inter Variable', sans-serif" }}>
-        Farma<span className="text-[#087f8c]">Flux</span>
+      <span className="text-[1.1875rem] font-bold tracking-tight text-ink" style={{ fontFamily: "'Inter Variable', sans-serif" }}>
+        Farma<span className="text-teal">Flux</span>
       </span>
     </span>
   );

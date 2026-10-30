@@ -58,7 +58,7 @@ export function PresentationPanel({ open, onClose }: { open: boolean; onClose: (
     <>
       <Dialog open={open && !confirmReset} onClose={onClose} variant="drawer" title="Modo apresentação" description="Controles técnicos para a banca. Não fazem parte da jornada do paciente.">
         <section aria-labelledby="clock-title" className="space-y-4">
-          <div className="rounded-2xl bg-ink p-4 text-white">
+          <div className="rounded-2xl bg-teal-deep p-4 text-white">
             <p id="clock-title" className="flex items-center gap-2 text-sm text-white/75">
               <Clock size={16} aria-hidden /> Relógio da demonstração · America/Sao_Paulo
             </p>
