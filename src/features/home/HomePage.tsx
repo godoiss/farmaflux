@@ -8,6 +8,7 @@ import { STATUS_COPY } from '../../domain/rules/preCheck';
 import { formatDateTime, datePart, weekday, weekdayName } from '../../domain/time';
 import { ContextSwitch } from '../profile/ContextSwitch';
 import { computeJourney } from './journey';
+import { ShaderBackground, HOME_UNIFORMS } from '../../components/ui/mesh-drift-shader';
 
 export function HomePage() {
   const { data } = useStore();
@@ -26,6 +27,11 @@ export function HomePage() {
 
   return (
     <div className="home-page">
+      <div className="home-ambient" aria-hidden>
+        <ShaderBackground className="home-ambient-shader" uniforms={HOME_UNIFORMS} />
+        <div className="home-ambient-scrim" />
+      </div>
+
       <header className="home-heading">
         <div>
           <p className="eyebrow">Seu espaço de cuidado</p>

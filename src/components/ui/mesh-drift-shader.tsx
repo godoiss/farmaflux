@@ -287,7 +287,7 @@ void main() {
 
 // Paleta FarmaFlux: verde-floresta profundo → teal → menta → accent.
 // (Valores sRGB normalizados 0..1, derivados dos tokens de --color-* do tema.)
-const UNIFORMS = {
+const WELCOME_UNIFORMS = {
   colors: [
     [0.050980392, 0.164705882, 0.141176471], // #0d2a24 floresta profunda
     [0.082352941, 0.247058824, 0.211764706], // #153f36 teal-deep
@@ -324,9 +324,55 @@ const UNIFORMS = {
   timeScale: -1.100,
 }
 
+export type ShaderUniforms = typeof WELCOME_UNIFORMS
+
+// Preset "Mesh drift" (21st.dev) para a home: azul/verde/cinza sobre grafite.
+export const HOME_UNIFORMS: ShaderUniforms = {
+  colors: [
+    [0.071, 0.114, 0.129], // #121D21
+    [0.0, 0.749, 1.0], // #00BFFF
+    [0.267, 0.859, 0.2], // #44DB33
+    [0.278, 0.341, 0.361], // #47575C
+    [0.278, 0.341, 0.361],
+    [0.278, 0.341, 0.361],
+    [0.278, 0.341, 0.361],
+    [0.278, 0.341, 0.361],
+  ] as [number, number, number][],
+  colorCount: 4,
+  scale: 1.3,
+  intensity: 0.56,
+  paramA: 0.67,
+  warp: 0.19,
+  detail: 2.02,
+  contrast: 1.17,
+  brightness: 0.0,
+  saturation: 1.0,
+  hue: 0.0,
+  vignette: 0.15,
+  blur: 0.007,
+  grain: 0.1,
+  seed: 5069.0,
+  rotate: 2.72,
+  offsetX: 0.09,
+  offsetY: 0.15,
+  drift: 0.15,
+  cursorEnabled: true,
+  cursorEffect: 2.0,
+  cursorStrength: 0.73,
+  cursorRadius: 0.36,
+  oklab: 0.0,
+  timeScale: -1.37,
+}
+
 const pendingContextReleases = new WeakMap<HTMLCanvasElement, number>()
 
-export function ShaderBackground({ className }: { className?: string }) {
+export function ShaderBackground({
+  className,
+  uniforms = WELCOME_UNIFORMS,
+}: {
+  className?: string
+  uniforms?: ShaderUniforms
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -380,41 +426,41 @@ export function ShaderBackground({ className }: { className?: string }) {
       space: gl.getUniformLocation(program, "u_space"),
       cursor: gl.getUniformLocation(program, "u_cursor"),
     }
-    gl.uniform3fv(uni.colors, new Float32Array(UNIFORMS.colors.flat()))
+    gl.uniform3fv(uni.colors, new Float32Array(uniforms.colors.flat()))
     gl.uniform4f(
       uni.shape,
-      UNIFORMS.scale,
-      UNIFORMS.intensity,
-      UNIFORMS.paramA,
-      UNIFORMS.warp,
+      uniforms.scale,
+      uniforms.intensity,
+      uniforms.paramA,
+      uniforms.warp,
     )
     gl.uniform4f(
       uni.surface,
-      UNIFORMS.detail,
-      UNIFORMS.contrast,
-      UNIFORMS.brightness,
-      UNIFORMS.saturation,
+      uniforms.detail,
+      uniforms.contrast,
+      uniforms.brightness,
+      uniforms.saturation,
     )
     gl.uniform4f(
       uni.finish,
-      UNIFORMS.hue,
-      UNIFORMS.vignette,
-      UNIFORMS.blur,
-      UNIFORMS.grain,
+      uniforms.hue,
+      uniforms.vignette,
+      uniforms.blur,
+      uniforms.grain,
     )
     gl.uniform4f(
       uni.transform,
-      UNIFORMS.seed,
-      UNIFORMS.rotate,
-      UNIFORMS.drift,
-      UNIFORMS.oklab,
+      uniforms.seed,
+      uniforms.rotate,
+      uniforms.drift,
+      uniforms.oklab,
     )
     gl.uniform4f(
       uni.cursor,
       0,
-      UNIFORMS.cursorEffect,
-      UNIFORMS.cursorStrength,
-      UNIFORMS.cursorRadius,
+      uniforms.cursorEffect,
+      uniforms.cursorStrength,
+      uniforms.cursorRadius,
     )
 
     let targetX = 0
@@ -433,8 +479,8 @@ export function ShaderBackground({ className }: { className?: string }) {
     let inView = true
     let disposed = false
     const start = performance.now()
-    const timeAnimated = !reduceMotion && Math.abs(UNIFORMS.timeScale) > 0.0001
-    const cursorEnabled = UNIFORMS.cursorEnabled && !reduceMotion
+    const timeAnimated = !reduceMotion && Math.abs(uniforms.timeScale) > 0.0001
+    const cursorEnabled = uniforms.cursorEnabled && !reduceMotion
 
     const resizeCanvas = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2)
@@ -549,22 +595,22 @@ export function ShaderBackground({ className }: { className?: string }) {
         uni.scene,
         width,
         height,
-        ((now - start) / 1000) * UNIFORMS.timeScale,
-        UNIFORMS.colorCount,
+        ((now - start) / 1000) * uniforms.timeScale,
+        uniforms.colorCount,
       )
       gl.uniform4f(
         uni.space,
-        UNIFORMS.offsetX,
-        UNIFORMS.offsetY,
+        uniforms.offsetX,
+        uniforms.offsetY,
         mouseX,
         mouseY,
       )
       gl.uniform4f(
         uni.cursor,
         cursorEnabled ? cursorPresence : 0,
-        UNIFORMS.cursorEffect,
-        UNIFORMS.cursorStrength,
-        UNIFORMS.cursorRadius,
+        uniforms.cursorEffect,
+        uniforms.cursorStrength,
+        uniforms.cursorRadius,
       )
       gl.drawArrays(gl.TRIANGLES, 0, 3)
       const pointerSettling =
@@ -603,7 +649,7 @@ export function ShaderBackground({ className }: { className?: string }) {
       }, 0)
       pendingContextReleases.set(canvas, releaseTimer)
     }
-  }, [])
+  }, [uniforms])
 
   return (
     <canvas ref={canvasRef} className={className} style={{ display: "block", width: "100%", height: "100%" }} />
