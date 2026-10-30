@@ -1,5 +1,5 @@
 ﻿import { Link } from 'react-router-dom';
-import { ArrowDown, ArrowRight, ArrowUpRight, BellRing, CalendarDays, Check, ChevronRight, FileText, ListChecks, Plus, ShieldCheck } from 'lucide-react';
+import { ArrowDown, ArrowRight, ArrowUpRight, BellRing, CalendarDays, Check, ChevronDown, ChevronRight, FileText, ListChecks, Plus, ShieldCheck } from 'lucide-react';
 import { LinkButton } from '../../components/ui/Button';
 import { StatusPill } from '../../components/ui/Display';
 import { useStore } from '../../state/AppStore';
@@ -65,13 +65,11 @@ export function HomePage() {
               <Link to="/unidades" className="hero-secondary">Ver unidades <ArrowUpRight size={17} aria-hidden /></Link>
             </div>
           </div>
-          <div className="hero-footnote"><ShieldCheck size={15} aria-hidden /> Seu planejamento começa com informação.</div>
         </section>
 
         <section className="next-step" aria-labelledby="next-title">
           <div className="section-topline"><p className="eyebrow">Próximo passo</p><span className="step-marker" aria-hidden><ArrowDown size={17} /></span></div>
           <div className="next-step-body">
-            <p className="text-xs font-medium text-ink-soft">Pendência atual</p>
             <h2 id="next-title">{journey.next.title}</h2>
             <StatusPill tone={journey.next.tone}>{journey.next.status}</StatusPill>
             <p className="next-description">{journey.next.description}</p>
@@ -80,11 +78,14 @@ export function HomePage() {
         </section>
       </div>
 
-      <section className="journey-section" aria-labelledby="journey-title">
-        <div className="section-topline">
+      <details className="journey-section">
+        <summary className="journey-summary">
           <h2 id="journey-title" className="section-heading">Sua jornada de cuidado</h2>
-          <span className="journey-count"><strong>{completed}</strong> de 4 etapas concluídas</span>
-        </div>
+          <span className="journey-summary-meta">
+            <span className="journey-count"><strong>{completed}</strong> de 4 etapas concluídas</span>
+            <span className="journey-toggle"><span className="when-closed">Ver etapas</span><span className="when-open">Recolher</span><ChevronDown size={16} aria-hidden /></span>
+          </span>
+        </summary>
         <ol className="journey-track">
           {journey.stages.map((stage, i) => (
             <li key={stage.label} className={`journey-stage is-${stage.state}`} aria-current={stage.state === 'current' ? 'step' : undefined}>
@@ -94,12 +95,12 @@ export function HomePage() {
             </li>
           ))}
         </ol>
-      </section>
+      </details>
 
       <div className="home-details-grid">
-        <section className="overview-section" aria-labelledby="rx-summary">
+        <section className="overview-section prescriptions-overview" aria-labelledby="rx-summary">
           <div className="section-topline">
-            <h2 id="rx-summary" className="section-heading">Suas receitas <span className="count-badge">{prescriptions.length}</span></h2>
+            <h2 id="rx-summary" className="section-heading"><span className="overview-icon"><FileText size={19} strokeWidth={1.7} aria-hidden /></span>Suas receitas <span className="count-badge">{prescriptions.length}</span></h2>
             <Link to="/receitas" className="text-link">Ver todas <ArrowUpRight size={16} aria-hidden /></Link>
           </div>
           <p className="section-caption">{withIssues === 0 ? (prescriptions.length ? 'Tudo em ordem com a pré-conferência documental.' : 'Adicione sua primeira receita para começar.') : `${withIssues} receita${withIssues === 1 ? ' precisa' : 's precisam'} da sua atenção.`}</p>
@@ -122,13 +123,14 @@ export function HomePage() {
 
         <section className="overview-section reminder-overview" aria-labelledby="rem-summary">
           <div className="section-topline">
-            <h2 id="rem-summary" className="section-heading">Lembretes</h2>
+            <h2 id="rem-summary" className="section-heading"><span className="overview-icon"><BellRing size={19} strokeWidth={1.7} aria-hidden /></span>Lembretes</h2>
             <Link to="/lembretes" className="text-link">Abrir <ArrowUpRight size={16} aria-hidden /></Link>
           </div>
           <div className="reminder-numbers">
-            <div><strong>{String(reminders.upcoming.length).padStart(2, '0')}</strong><span>próximo{reminders.upcoming.length === 1 ? '' : 's'}</span></div>
-            <div className={reminders.overdue.length ? 'has-overdue' : ''}><strong>{String(reminders.overdue.length).padStart(2, '0')}</strong><span>vencido{reminders.overdue.length === 1 ? '' : 's'}</span></div>
-            <BellRing size={30} strokeWidth={1.2} className="reminder-decoration" aria-hidden />
+            <div><strong>{reminders.upcoming.length}</strong><span>próximo{reminders.upcoming.length === 1 ? '' : 's'}</span></div>
+            {reminders.overdue.length > 0
+              ? <div className="has-overdue"><strong>{reminders.overdue.length}</strong><span>vencido{reminders.overdue.length === 1 ? '' : 's'}</span></div>
+              : <p className="reminder-clear"><Check size={15} aria-hidden /> Nenhum vencido</p>}
           </div>
           {nextReminder ? (
             <Link to={`/lembretes?lembrete=${nextReminder.id}`} className="reminder-item">
